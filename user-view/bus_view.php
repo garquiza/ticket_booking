@@ -4,7 +4,11 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Include the database connection
 include '../includes/db.php';
+
+// Initialize message variable
+$message = '';
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,15 +24,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $returnDate = $_POST['return_date'] ?? '';
     $departureTime = $_POST['departure_time'] ?? '';
     $returnTime = $_POST['return_time'] ?? '';
-    $passengerQuantity = $_POST['passenger_quantity'] ?? '';
+    $passengerQuantity = $_POST['ticket_quantity'] ?? '';
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
 
     // Validate form data
-    if ($serviceType && $destination && $departureDate && $departureTime && $passengerQuantity && ($serviceType === 'one_way' || ($serviceType === 'round_trip' && $returnDate && $returnTime))) {
-        // Insert data into the database
-        $sql = "INSERT INTO bookings (service_type, destination, departure_date, return_date, departure_time, return_time, passenger_quantity) 
-                VALUES ('$serviceType', '$destination', '$departureDate', '$returnDate', '$departureTime', '$returnTime', '$passengerQuantity')";
+    if ($serviceType && $destination && $departureDate && $departureTime && $passengerQuantity && $name && $email && $phone && ($serviceType === 'one_way' || ($serviceType === 'round_trip' && $returnDate && $returnTime))) {
+        // Store booking data in the database
+        $selectedSeats = isset($_POST['selected_seats']) ? implode(',', $_POST['selected_seats']) : '';
+        $sql = "INSERT INTO bookings (service_type, destination, departure_date, return_date, departure_time, return_time, passenger_quantity, selected_seats, name, email, phone) 
+                VALUES ('$serviceType', '$destination', '$departureDate', '$returnDate', '$departureTime', '$returnTime', '$passengerQuantity', '$selectedSeats', '$name', '$email', '$phone')";
         if ($conn->query($sql) === TRUE) {
-            $message = "Booking saved successfully";
+            $message = "Booking successful!";
         } else {
             $message = "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -40,125 +48,131 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Ticket Booking</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
+
 <body>
-    <div class="booking-form">
+    <div class="container">
         <h1>Bus Ticket Booking</h1>
-        <?php if (isset($message)): ?>
-            <div class="message"><?php echo $message; ?></div>
-        <?php endif; ?>
-        <form method="POST" action="">
-            <label for="service_type">Service Type:</label><br>
-            <select name="service_type" id="service_type" required>
-                <option value="" selected disabled>Select Service Type</option>
-                <option value="one_way">One Way</option>
-                <option value="round_trip">Round Trip</option>
-            </select><br>
-
-            <div id="one_way_destination_block">
-                <label for="one_way_destination">Destination:</label><br>
-                <select name="one_way_destination" id="one_way_destination" required>
-                    <option value="" selected disabled>Select destination</option>
-                    <option value="Manila">Manila</option>
-                    <option value="Baguio">Baguio</option>
-                    <option value="Tuguegarao">Tuguegarao</option>
-                </select><br>
-            </div>
-
-            <div id="round_trip_destination_block" style="display: none;">
-                <label for="round_trip_from">From:</label><br>
-                <select name="round_trip_from" id="round_trip_from" required>
-                    <option value="" selected disabled>Select departure location</option>
-                    <option value="Manila">Manila</option>
-                    <option value="Baguio">Baguio</option>
-                    <option value="Tuguegarao">Tuguegarao</option>
-                </select><br>
-                <label for="round_trip_to">To:</label><br>
-                <select name="round_trip_to" id="round_trip_to" required>
-                    <option value="" selected disabled>Select arrival location</option>
-                    <option value="Manila">Manila</option>
-                    <option value="Baguio">Baguio</option>
-                    <option value="Tuguegarao">Tuguegarao</option>
-                </select><br>
-            </div>
-
-            <label for="departure_date">Departure Date:</label><br>
-            <input type="text" name="departure_date" id="departure_date" placeholder="mm/dd/yyyy" required><br>
-
-            <div id="return_date_time_block" style="display: none;">
-                <label for="return_date">Return Date:</label><br>
-                <input type="text" name="return_date" id="return_date" placeholder="mm/dd/yyyy"><br>
-                
-                <label for="return_time">Return Time:</label><br>
-                <select name="return_time" id="return_time">
-                    <?php for ($hour = 0; $hour < 24; $hour++): ?>
-                        <option value="<?php printf('%02d:00', $hour); ?>"><?php printf('%02d:00', $hour); ?></option>
-                    <?php endfor; ?>
-                </select><br>
-            </div>
-
-            <label for="departure_time">Departure Time:</label><br>
-            <select name="departure_time" id="departure_time" required>
-                <?php for ($hour = 0; $hour < 24; $hour++): ?>
-                    <option value="<?php printf('%02d:00', $hour); ?>"><?php printf('%02d:00', $hour); ?></option>
-                <?php endfor; ?>
-            </select><br>
-
-            <label for="passenger_quantity">Passengers Ticket Quantity:</label><br>
-            <input type="number" name="passenger_quantity" id="passenger_quantity" required><br>
-
-            <input type="submit" value="Book Ticket">
-        </form>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <button id="scroll_to_details">Book Now</button>
     </div>
+    <?php if (isset($message)) : ?>
+        <div class="message"><?php echo $message; ?></div>
+    <?php endif; ?>
+    <form method="POST" action="" class="" onsubmit="return validateForm()">
+        <div id="details_container">
+            <div id="bus_details">
+                <!-- Bus details -->
+                <label for="service_type">Service Type:</label>
+                <select name="service_type" id="service_type" required>
+                    <option value="" selected disabled>Select Service Type</option>
+                    <option value="round_trip">Round-Trip</option>
+                    <option value="one_way">One-Way</option>
+                </select><br>
 
-    <script>
-        // showing/hiding destination block based on service type
-        $(document).ready(function() {
-            const serviceTypeSelect = $('#service_type');
-            const oneWayDestinationBlock = $('#one_way_destination_block');
-            const roundTripDestinationBlock = $('#round_trip_destination_block');
-            const returnDateTimeBlock = $('#return_date_time_block');
+                <div id="one_way_destination_block">
+                    <label for="one_way_destination">Destination:</label><br>
+                    <select name="one_way_destination" id="one_way_destination" required>
+                        <option value="" selected disabled>Select destination</option>
+                        <option value="Manila">Manila</option>
+                        <option value="Baguio">Baguio</option>
+                        <option value="Tuguegarao">Tuguegarao</option>
+                    </select><br>
+                </div>
 
-            oneWayDestinationBlock.hide();
+                <div id="round_trip_destination_block" style="display: none;">
+                    <label for="round_trip_from">From:</label><br>
+                    <select name="round_trip_from" id="round_trip_from" required>
+                        <option value="" selected disabled>Select departure location</option>
+                        <option value="Manila">Manila</option>
+                        <option value="Baguio">Baguio</option>
+                        <option value="Tuguegarao">Tuguegarao</option>
+                    </select><br>
+                    <label for="round_trip_to">To:</label><br>
+                    <select name="round_trip_to" id="round_trip_to" required>
+                        <option value="" selected disabled>Select arrival location</option>
+                        <option value="Manila">Manila</option>
+                        <option value="Baguio">Baguio</option>
+                        <option value="Tuguegarao">Tuguegarao</option>
+                    </select><br>
+                </div>
 
-            serviceTypeSelect.change(function() {
-                if (serviceTypeSelect.val() === 'one_way') {
-                    oneWayDestinationBlock.show();
-                    roundTripDestinationBlock.hide();
-                    returnDateTimeBlock.hide();
-                    $('#return_date').prop('required', false);
-                    $('#return_time').prop('required', false);
-                } else if (serviceTypeSelect.val() === 'round_trip') {
-                    oneWayDestinationBlock.hide();
-                    roundTripDestinationBlock.show();
-                    returnDateTimeBlock.show();
-                    $('#return_date').prop('required', true);
-                    $('#return_time').prop('required', true);
-                } else {
-                    oneWayDestinationBlock.hide();
-                    roundTripDestinationBlock.hide();
-                    returnDateTimeBlock.hide();
-                }
-            });
+                <label for="departure_date">Departure Date:</label>
+                <input type="date" name="departure_date" id="departure_date" required><br>
 
-            $("#departure_date").datepicker({
-                dateFormat: 'mm/dd/yy',
-                minDate: 0 // Set minDate to restrict selection to future dates only
-            });
-            $("#return_date").datepicker({
-                dateFormat: 'mm/dd/yy',
-                minDate: 0 // Set minDate to restrict selection to future dates only
-            });
-        });
-    </script>
+                <div id="return_date_time_block" style="display: none;">
+                    <label for="return_date">Return Date:</label>
+                    <input type="date" name="return_date" id="return_date" required><br>
+
+                    <label for="return_time">Return Time:</label><br>
+                    <input type="time" name="return_time" id="return_time" required><br>
+                </div>
+
+                <label for="departure_time">Departure Time:</label>
+                <input type="time" name="departure_time" id="departure_time" required><br>
+
+                <div id="ticket_quantity_container">
+                    <label for="ticket_quantity">Ticket Quantity:</label>
+                    <input type="number" name="ticket_quantity" id="ticket_quantity" required><br>
+                    <button type="button" id="select_seats" class="btns">Select Seats</button>
+                </div>
+            </div>
+
+            <div id="seat_selection_container" style="display: none;">
+                <h2>Select Your Seats</h2>
+                <div id="seat_map"></div>
+                <button type="button" id="confirm_seats" class="btns">Confirm Seats</button>
+            </div>
+
+            <div id="personal_info_container" style="display: none;">
+                <!-- Personal info -->
+                <h2>Personal Information</h2>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required><br>
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone" required><br>
+                <button type="button" id="next_personal_info" class="btns">Next</button>
+            </div>
+
+            <div id="policy_review_container" style="display: none;">
+                <!-- Policy review -->
+                <h2>Policies and Terms & Conditions</h2>
+                <br>
+                <div class="terms-and-conditions">
+                    <h4>1. Booking Confirmation</h4>
+                    <p>1.1. Your booking is confirmed once payment has been successfully processed and you have received a booking confirmation email or SMS containing your ticket details.</p>
+                    <p>1.2. Please review your booking confirmation carefully to ensure all details, including the date, time, and venue, are correct. Notify us immediately if you identify any discrepancies.</p>
+
+                    <h4>2. Ticket Usage</h4>
+                    <p>2.1. You must present a valid ID along with your ticket (electronic or printed) to board the bus or enter the cinema.</p>
+                    <p>2.2. Tickets are non-transferable and must not be resold. Any unauthorized resale or attempted resale may result in the cancellation of the ticket without refund.</p>
+                    <h4>9. Governing Law</h4>
+                    <p>9.1. These terms and conditions are governed by and construed in accordance with the laws of [Jurisdiction]. Any disputes arising out of or related to your booking will be subject to the exclusive jurisdiction of the courts in [Jurisdiction].</p>
+                    <br>
+                </div>
+
+                <div class="agree-container">
+                    <input type="checkbox" name="agree" id="agree" required>
+                    <label for="agree">I agree to the terms and conditions</label>
+                </div>
+
+                <br>
+                <input type="submit" value="Book Tickets" class="btn">
+            </div>
+        </div>
+    </form>
+    <script src="../script.js"></script>
 </body>
-</html>
 
+</html>

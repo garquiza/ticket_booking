@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Alike&family=Mitr:wght@200;300;400;500;600;700&display=swap');
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    background-image: url('../assets/bg.jpg');
+    background-size: cover;
+    background-position: top center;
+    background-attachment: fixed;
+    font-family: "Alike", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header {
+    background-color: #333;
+}
+
+p {
+    text-align: center;
+    color: #ccc;
+    font-family: "Mitr", sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #151501ad;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-family: "Mitr", sans-serif;
+    text-align: center;
+    font-size: 3rem;
+    font-family: "Mitr", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    margin-bottom: 0;
+    color: #cfc9c9;
+    margin-top: 10rem;
+}
+
+#scroll_to_details {
+    align-self: center;
+    display: flex;
+    margin-bottom: 10rem;
+    margin-top: 1.2rem;
+    font-family: "Alike", serif;
+    font-size: 1.3rem;
+    background-color: #e1d816;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #e1d816;
+    transition: box-shadow 0.3s ease;
+}
+
+#scroll_to_details:hover {
+    box-shadow: 0 0 30px #e1d816;
+}
+
+#details_container {
+    background-color: #3c3a05de;
+    max-width: 45%;
+    padding: 3rem;
+    margin: 5rem;
+    margin-left: 25%;
+    margin-right: 25%;
+    align-content: center;
+    border-radius: 1rem;
+}
+
+.form-container {
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+input[type="submit"] {
+    background-color: #e1d816;
+    font-family: "Alike", serif;
+    color: rgb(7, 7, 7);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #3c3a05;
+    color: #ccc;
+}
+
+#seat_map {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.seat-row {
+    display: flex;
+}
+
+.seat {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.seat.selected {
+    background-color: #3c3a05;
+    color: #fff;
+}
+
+#personal_info_container,
+#policy_review_container {
+    display: none;
+    margin-top: 1rem;
+}
+
+.btns {
+    font-family: "Alike", serif;
+    margin-top: 10px;
+    color: rgb(7, 7, 7);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #e1d816;
+    transition: box-shadow 0.3s ease;
+    margin-left: 240px;
+
+}
+
+.btns:hover {
+    background-color: #3c3a05;
+    color: #ccc;
+    text-align: center;
+}
+
+#personal_info_container h2,
+#seat_selection_container h2,
+#policy_review_container h2 {
+    color: white;
+    text-align: center;
+}
+
+#personal_info_container form {
+    text-align: center;
+    color: white;
+}
+
+#policy_review_container {
+    text-align: center;
+    color: white;
+}
+
+.terms-and-conditions {
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto 20px;
+}
+
+.terms-and-conditions h4 {
+    margin-top: 20px;
+    text-align: left;
+    color: white;
+}
+
+.terms-and-conditions p {
+    margin-bottom: 10px;
+    color: white;
+    text-align: left;
+}
+
+.agree-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.agree-container label {
+    margin-left: 0.5rem;
+    color: white;
+}
