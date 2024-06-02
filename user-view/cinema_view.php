@@ -19,12 +19,30 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="../user-view/cinema-script.js"></script>
 </head>
 
-<body>
+<body style="background-image: url('../assets/MOVIEbg.jpg');">
+    <header>
+        <nav>
+            <div class="nav-left">
+                <img src="../assets/MOVIElogo.png" alt="Company Logo" class="company-logo">
+            </div>
+            <div class="nav-right">
+                <span class="company-name">Pasara na Company</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Cinema Ticket Booking</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br>sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.</p>
+        <a href="#movie_details" id="scroll_to_details">Book Now</a>
+    </div>
+
     <form method="POST" action="movie_controller.php">
         <div id="details_container">
             <div id="movie_details">
                 <!-- Movie details -->
-                <label for="select_movie">Movie</label><br>
+                <label for="select_movie">Movie</label>
                 <select name="select_movie" id="select_movie" required>
                     <option value="" selected disabled>Select Movie</option>
                     <option value="Movie1">Movie 1</option>

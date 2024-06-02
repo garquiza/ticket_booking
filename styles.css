@@ -6,7 +6,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    background-image: url('../assets/bg.jpg');
     background-size: cover;
     background-position: top center;
     background-attachment: fixed;
@@ -16,8 +15,75 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #9c9723;
+    ;
+    padding: 10px 20px;
 }
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.company-logo {
+    width: 100px;
+    height: auto;
+    margin-left: 210px;
+}
+
+.company-name {
+    font-size: 2rem;
+    color: #fff;
+    margin-right: 210px;
+}
+
+/* nav a {
+    display: block;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 30px 16px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav a::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: white;
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+} */
 
 p {
     text-align: center;
@@ -28,12 +94,13 @@ p {
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 100;
+    max-width: 95%;
     margin: 20px auto;
     padding: 20px;
     background-color: #151501ad;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: 100px;
 }
 
 h1 {
@@ -45,13 +112,10 @@ h1 {
     font-style: normal;
     margin-bottom: 0;
     color: #cfc9c9;
-    margin-top: 10rem;
 }
 
 #scroll_to_details {
     align-self: center;
-    display: flex;
-    margin-bottom: 10rem;
     margin-top: 1.2rem;
     font-family: "Alike", serif;
     font-size: 1.3rem;
@@ -62,10 +126,14 @@ h1 {
     cursor: pointer;
     box-shadow: 0 0 20px #e1d816;
     transition: box-shadow 0.3s ease;
+    text-decoration: none;
+    color: rgb(7, 7, 7);
+    display: inline-block;
 }
 
 #scroll_to_details:hover {
     box-shadow: 0 0 30px #e1d816;
+    text-decoration: none;
 }
 
 #details_container {
@@ -173,13 +241,9 @@ input[type="submit"]:hover {
     background-color: #e1d816;
     transition: box-shadow 0.3s ease;
     margin: 0 auto;
-    /* Center horizontally */
     display: block;
-    /* Ensure it occupies full width */
     align-items: center;
-    /* This will not work unless .btns is a flex or grid container */
     justify-content: center;
-    /* This will not work unless .btns is a flex or grid container */
     text-align: center;
 }
 

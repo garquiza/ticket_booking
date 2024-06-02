@@ -18,7 +18,25 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="../user-view/bus-script.js"></script>
 </head>
 
-<body>
+<body style="background-image: url('../assets/BUSbg.jpg');">
+    <header>
+        <nav>
+            <div class="nav-left">
+                <img src="../assets/BUSlogo.png" alt="Company Logo" class="company-logo">
+            </div>
+            <div class="nav-right">
+                <span class="company-name">Pasara na Company</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Bus Ticket Booking</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br>sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.</p>
+        <a href="#bus_details" id="scroll_to_details">Book Now</a>
+    </div>
+
     <form id="bookingForm" action="bus_controller.php" method="POST">
         <div id="details_container">
             <div id="bus_details">
