@@ -53,3 +53,9 @@ CREATE TABLE moviebooking (
     phone VARCHAR(20) NOT NULL
 );
 
+CREATE TABLE settings (
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    site_name VARCHAR(255) NOT NULL,
+    h1_text VARCHAR(255) NOT NULL,
+    p_text TEXT NOT NULL
+);

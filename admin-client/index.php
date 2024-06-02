@@ -28,26 +28,26 @@ if ($settings['bus_feature'] && $settings['cinema_feature']) {
 // Check if the bus feature is enabled
 if ($settings['bus_feature']) {
     // If only the bus feature is enabled, display client admin panel for bus
-    ?>
+?>
     <h1>Client Admin Panel (Bus)</h1>
     <ul>
         <li><a href="settings.php">Bus Settings</a></li>
         <li><a href="?logout=true">Logout</a></li>
     </ul>
-    <?php
+<?php
     exit();
 }
 
 // Check if the cinema feature is enabled
 if ($settings['cinema_feature']) {
     // If only the cinema feature is enabled, display client admin panel for cinema
-    ?>
+?>
     <h1>Client Admin Panel (Cinema)</h1>
     <ul>
         <li><a href="settings.php">Cinema Settings</a></li>
         <li><a href="?logout=true">Logout</a></li>
     </ul>
-    <?php
+<?php
     exit();
 }
 

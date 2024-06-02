@@ -1,6 +1,19 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+include '../includes/db.php';
+
+// Check if connection is successful
+if ($conn === false) {
+    die("Error: Could not connect. " . mysqli_connect_error());
+}
+
+// Declare settings variable
+$settings = array();
+
+// Check if settings are available
+$sql = "SELECT * FROM settings WHERE id=1";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    $settings = $result->fetch_assoc();
 }
 ?>
 
@@ -25,16 +38,15 @@ if (session_status() == PHP_SESSION_NONE) {
                 <img src="../assets/BUSlogo.png" alt="Company Logo" class="company-logo">
             </div>
             <div class="nav-right">
-                <span class="company-name">Pasara na Company</span>
+                <span class="company-name"><?php echo $settings['site_name']; ?></span>
             </div>
         </nav>
     </header>
 
     <div class="container">
-        <h1>Bus Ticket Booking</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br>sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.</p>
-        <a href="#bus_details" id="scroll_to_details">Book Now</a>
+        <h1><?php echo $settings['h1_text']; ?></h1>
+        <p><?php echo $settings['p_text']; ?></p>
+        <a href="#movie_details" id="scroll_to_details">Book Now</a>
     </div>
 
     <form id="bookingForm" action="bus_controller.php" method="POST">
