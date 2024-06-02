@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
     "policy_review_container"
   );
 
+  var scrollToDetailsButton = document.getElementById("scroll_to_details");
   var ticketQuantityInput = document.getElementById("ticket_quantity");
+  var selectedSeatsInput = document.getElementById("selected_seats");
+
   var selectSeatsButton = document.getElementById("select_seats");
   var confirmSeatsButton = document.getElementById("confirm_seats");
   var nextPersonalInfoButton = document.getElementById("next_personal_info");
@@ -86,53 +89,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to show policy review section
   function showPolicyReview() {
+    $("#one_way_destination").prop("required", false);
+    $("#round_trip_from").prop("required", false);
+    $("#round_trip_to").prop("required", false);
     personalInfoContainer.style.display = "none";
     policyReviewContainer.style.display = "block";
   }
 
   // Generate seat map
   function generateSeatMap() {
-    var rows = 11; // Number of rows for the seat map
-    var cols = 5; // Number of columns for the seat map
-    seatMap.innerHTML = ""; // Clear existing seats
-    var seatNumber = 1; // Start seat numbering from 1
-    var ticketQuantity = parseInt(ticketQuantityInput.value);
+    var rows = 11;
+    var cols = 5;
+    seatMap.innerHTML = "";
+    var seatNumber = 1;
+
     for (var i = 0; i < rows; i++) {
       var row = document.createElement("div");
       row.classList.add("seat-row");
+
       for (var j = 0; j < cols; j++) {
         var seat = document.createElement("div");
         seat.classList.add("seat");
-        // Check if last row and seat number is within valid range
+
+        // Check if the seat number is within the valid range
         if (seatNumber <= 45) {
-          if (i === rows - 1) {
+          if (i === rows - 1 || (j + 1) % 3 !== 0) {
             seat.textContent = seatNumber;
             seat.addEventListener("click", function () {
               if (!this.classList.contains("blank-seat")) {
                 this.classList.toggle("selected");
+                updateSelectedSeats();
               }
             });
             seatNumber++;
           } else {
-            if ((j + 1) % 3 !== 0) {
-              seat.textContent = seatNumber;
-              seat.addEventListener("click", function () {
-                if (!this.classList.contains("blank-seat")) {
-                  this.classList.toggle("selected");
-                }
-              });
-              seatNumber++;
-            } else {
-              seat.classList.add("blank-seat");
-            }
+            seat.classList.add("blank-seat");
           }
         } else {
           seat.classList.add("blank-seat");
         }
+
         row.appendChild(seat);
       }
+
       seatMap.appendChild(row);
     }
+  }
+
+  function updateSelectedSeats() {
+    var selectedSeats = [];
+    var selectedElements = document.querySelectorAll(".seat.selected");
+
+    selectedElements.forEach(function (seat) {
+      selectedSeats.push(seat.textContent);
+    });
+
+    selectedSeatsInput.value = selectedSeats.join(",");
   }
 
   // Function to confirm seat selection
@@ -179,6 +191,34 @@ $(document).ready(function () {
       oneWayDestinationBlock.hide();
       roundTripDestinationBlock.hide();
       returnDateTimeBlock.hide();
+    }
+  });
+
+  $("#bookingForm").submit(function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    $("#one_way_destination").prop("required", true);
+    $("#round_trip_from").prop("required", true);
+    $("#round_trip_to").prop("required", true);
+
+    if (validateForm()) {
+      var formData = $(this).serialize(); // Serialize form data
+
+      $.ajax({
+        url: "bus_controller.php",
+        type: "POST",
+        data: formData,
+        success: function (response) {
+          if (response.status === "success") {
+            alert(response.message);
+          } else {
+            alert("Error: " + response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          alert("An error occurred while submitting your booking: " + error);
+        },
+      });
     }
   });
 });

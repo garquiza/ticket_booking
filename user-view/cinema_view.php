@@ -1,38 +1,8 @@
 <?php
-// Check if session is already active before starting a new one
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include '../includes/db.php';
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve form data
-    $movie = $_POST['select_movie'] ?? '';
-    $movieDate = $_POST['movie_date'] ?? '';
-    $movieTime = $_POST['movie_time'] ?? '';
-    $ticketQuantity = $_POST['ticket_quantity'] ?? '';
-    $seats = $_POST['seats'] ?? '';
-    $name = $_POST['name'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $phone = $_POST['phone'] ?? '';
-
-
-    // Validate form data
-    if ($movie && $movieDate && $movieTime && $ticketQuantity && $seats && $name && $email && $phone) {
-        // Insert data into the database
-        $sql = "INSERT INTO moviebooking (select_movie, movie_date, movie_time, ticket_quantity, seats, name, email, phone) 
-                VALUES ('$movie', '$movieDate', '$movieTime', '$ticketQuantity', '$seats', '$name', '$email', '$phone')";
-        if ($conn->query($sql) === TRUE) {
-            $message = "Booking saved successfully";
-        } else {
-            $message = "Error: " . $sql . "<br>" . $conn->error;
-        }
-    } else {
-        $message = "Error: All fields are required";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +16,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+    <!-- <div class="container">
+        <h1>Cinema Ticket Booking</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <button id="scroll_to_details">Book Now</button>
+    </div> -->
+    <form method="POST" action="movie_controller.php">
+        <div id="details_container">
+            <div id="movie_details">
+                <!-- Movie details -->
+                <label for="select_movie">Movie</label><br>
+                <select name="select_movie" id="select_movie" required>
+                    <option value="" selected disabled>Select Movie</option>
+                    <option value="Movie1">Movie 1</option>
+                    <option value="Movie2">Movie 2</option>
+                    <option value="Movie3">Movie 3</option>
+                </select><br>
+
+                <label for="movie_date">Movie Date:</label>
+                <input type="date" name="movie_date" id="movie_date" required><br>
+
+                <label for="movie_time">Movie Time:</label>
+                <input type="time" name="movie_time" id="movie_time" required><br>
+
+                <div id="ticket_quantity_container">
+                    <label for="ticket_quantity">Ticket Quantity:</label>
+                    <input type="number" name="ticket_quantity" id="ticket_quantity" required><br>
+                    <button type="button" id="select_seats" class="btns">Select Seats</button>
+                </div>
+            </div>
+
+            <!-- Seat selection -->
+            <div id="seat_selection_container" style="display: none;">
+                <h2>Select Your Seats</h2>
+                <div id="seat_map"></div>
+                <input type="hidden" name="seats" id="seats" required>
+                <button type="button" id="confirm_seats" class="btns">Confirm Seats</button>
+            </div>
+
+
+            <div id="personal_info_container" style="display: none;">
+                <!-- Personal info -->
+                <h2>Personal Information</h2>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required><br>
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone" required><br>
+                <button type="button" id="next_personal_info" class="btns">Next</button>
+            </div>
+
+            <div id="policy_review_container" style="display: none;">
+                <!-- Policy review -->
+                <h2>Policies and Terms & Conditions</h2>
+                <br>
+                <div class="terms-and-conditions">
+                    <h4>1. Booking Confirmation</h4>
+                    <p>1.1. Your booking is confirmed once payment has been successfully processed and you have received a booking confirmation email or SMS containing your ticket details.</p>
+                    <p>1.2. Please review your booking confirmation carefully to ensure all details, including the date, time, and venue, are correct. Notify us immediately if you identify any discrepancies.</p>
+
+                    <h4>2. Ticket Usage</h4>
+                    <p>2.1. You must present a valid ID along with your ticket (electronic or printed) to board the bus or enter the cinema.</p>
+                    <p>2.2. Tickets are non-transferable and must not be resold. Any unauthorized resale or attempted resale may result in the cancellation of the ticket without refund.</p>
+                    <h4>9. Governing Law</h4>
+                    <p>9.1. These terms and conditions are governed by and construed in accordance with the laws of [Jurisdiction]. Any disputes arising out of or related to your booking will be subject to the exclusive jurisdiction of the courts in [Jurisdiction].</p>
+                    <br>
+                </div>
+
+                <div class="agree-container">
+                    <input type="checkbox" name="agree" id="agree" required>
+                    <label for="agree">I agree to the terms and conditions</label>
+                </div>
+
+                <br>
+                <input type="submit" value="Book Tickets" class="btn">
+            </div>
+        </div>
+    </form>
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var movieDetails = document.getElementById("movie_details");
@@ -222,88 +275,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Dispatch change event to trigger initial seat map generation
             selectMovieSelect.dispatchEvent(new Event("change"));
         });
+
+        // Submit form asynchronously
+        $('form').submit(function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+
+            // Serialize form data
+            var formData = $(this).serialize();
+
+            // Submit form using AJAX
+            $.post('movie_controller.php', formData)
+                .done(function(response) {
+                    // Parse JSON response
+                    var data = JSON.parse(response);
+
+                    // Display message
+                    if (data.status === 'success') {
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .fail(function() {
+                    alert('An error occurred while processing your request.');
+                });
+        });
     </script>
-</head>
-
-<body>
-    <div class="container">
-        <h1>Cinema Ticket Booking</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <button id="scroll_to_details">Book Now</button>
-    </div>
-    <form method="POST" action="">
-        <div id="details_container">
-            <div id="movie_details">
-                <!-- Movie details -->
-                <label for="select_movie">Movie</label><br>
-                <select name="select_movie" id="select_movie" required>
-                    <option value="" selected disabled>Select Movie</option>
-                    <option value="Movie1">Movie 1</option>
-                    <option value="Movie2">Movie 2</option>
-                    <option value="Movie3">Movie 3</option>
-                </select><br>
-
-                <label for="movie_date">Movie Date:</label>
-                <input type="date" name="movie_date" id="movie_date" required><br>
-
-                <label for="movie_time">Movie Time:</label>
-                <input type="time" name="movie_time" id="movie_time" required><br>
-
-                <div id="ticket_quantity_container">
-                    <label for="ticket_quantity">Ticket Quantity:</label>
-                    <input type="number" name="ticket_quantity" id="ticket_quantity" required><br>
-                    <button type="button" id="select_seats" class="btns">Select Seats</button>
-                </div>
-            </div>
-
-            <!-- Seat selection -->
-            <div id="seat_selection_container" style="display: none;">
-                <h2>Select Your Seats</h2>
-                <div id="seat_map"></div>
-                <input type="hidden" name="seats" id="seats" required>
-                <button type="button" id="confirm_seats" class="btns">Confirm Seats</button>
-            </div>
-
-
-            <div id="personal_info_container" style="display: none;">
-                <!-- Personal info -->
-                <h2>Personal Information</h2>
-                <label for="name">Name:</label>
-                <input type="text" name="name" id="name" required><br>
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required><br>
-                <label for="phone">Phone:</label>
-                <input type="text" name="phone" id="phone" required><br>
-                <button type="button" id="next_personal_info" class="btns">Next</button>
-            </div>
-
-            <div id="policy_review_container" style="display: none;">
-                <!-- Policy review -->
-                <h2>Policies and Terms & Conditions</h2>
-                <br>
-                <div class="terms-and-conditions">
-                    <h4>1. Booking Confirmation</h4>
-                    <p>1.1. Your booking is confirmed once payment has been successfully processed and you have received a booking confirmation email or SMS containing your ticket details.</p>
-                    <p>1.2. Please review your booking confirmation carefully to ensure all details, including the date, time, and venue, are correct. Notify us immediately if you identify any discrepancies.</p>
-
-                    <h4>2. Ticket Usage</h4>
-                    <p>2.1. You must present a valid ID along with your ticket (electronic or printed) to board the bus or enter the cinema.</p>
-                    <p>2.2. Tickets are non-transferable and must not be resold. Any unauthorized resale or attempted resale may result in the cancellation of the ticket without refund.</p>
-                    <h4>9. Governing Law</h4>
-                    <p>9.1. These terms and conditions are governed by and construed in accordance with the laws of [Jurisdiction]. Any disputes arising out of or related to your booking will be subject to the exclusive jurisdiction of the courts in [Jurisdiction].</p>
-                    <br>
-                </div>
-
-                <div class="agree-container">
-                    <input type="checkbox" name="agree" id="agree" required>
-                    <label for="agree">I agree to the terms and conditions</label>
-                </div>
-
-                <br>
-                <input type="submit" value="Book Tickets" class="btn">
-            </div>
-        </div>
-    </form>
 </body>
 
 </html>

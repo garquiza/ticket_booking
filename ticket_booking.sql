@@ -24,7 +24,7 @@ INSERT INTO users (username, password, role) VALUES ('clientadmin', 'password', 
 INSERT INTO settings (id) VALUES (1);
 
 
-CREATE TABLE bookings (
+CREATE TABLE busbooking (
     id INT AUTO_INCREMENT PRIMARY KEY,
     service_type VARCHAR(20) NOT NULL,
     destination VARCHAR(100) NOT NULL,
