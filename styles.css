@@ -129,6 +129,9 @@ input[type="submit"]:hover {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .seat-row {
@@ -169,8 +172,15 @@ input[type="submit"]:hover {
     cursor: pointer;
     background-color: #e1d816;
     transition: box-shadow 0.3s ease;
-    margin-left: 240px;
-
+    margin: 0 auto;
+    /* Center horizontally */
+    display: block;
+    /* Ensure it occupies full width */
+    align-items: center;
+    /* This will not work unless .btns is a flex or grid container */
+    justify-content: center;
+    /* This will not work unless .btns is a flex or grid container */
+    text-align: center;
 }
 
 .btns:hover {
@@ -181,6 +191,7 @@ input[type="submit"]:hover {
 
 #personal_info_container h2,
 #seat_selection_container h2,
+#ticket_summary_container h2,
 #policy_review_container h2 {
     color: white;
     text-align: center;

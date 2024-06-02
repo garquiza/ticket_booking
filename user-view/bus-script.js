@@ -10,17 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
   var personalInfoContainer = document.getElementById(
     "personal_info_container"
   );
+  var ticketSummaryContainer = document.getElementById(
+    "ticket_summary_container"
+  );
   var policyReviewContainer = document.getElementById(
     "policy_review_container"
   );
 
-  var scrollToDetailsButton = document.getElementById("scroll_to_details");
   var ticketQuantityInput = document.getElementById("ticket_quantity");
   var selectedSeatsInput = document.getElementById("selected_seats");
 
   var selectSeatsButton = document.getElementById("select_seats");
   var confirmSeatsButton = document.getElementById("confirm_seats");
   var nextPersonalInfoButton = document.getElementById("next_personal_info");
+  var nextTicketSummaryButton = document.getElementById("next_ticket_summary");
   var seatMap = document.getElementById("seat_map");
 
   // Ensure ticket quantity cannot go below 1
@@ -43,19 +46,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // Confirm seats and show personal information and policy review
   confirmSeatsButton.addEventListener("click", function () {
     if (confirmSelection()) {
-      showPersonalInfoAndPolicy();
+      showPersonalInfo();
     }
   });
 
-  // Next button click to show policy review
+  // Next button click to show ticket summary
   nextPersonalInfoButton.addEventListener("click", function () {
     if (validatePersonalInfo()) {
-      showPolicyReview();
+      showTicketSummary();
     } else {
       alert(
         "Please fill out all required fields in the Personal Information section."
       );
     }
+  });
+
+  // Next button click to show policy review
+  nextTicketSummaryButton.addEventListener("click", function () {
+    showPolicyReview();
   });
 
   // Function to validate personal information section
@@ -76,23 +84,31 @@ document.addEventListener("DOMContentLoaded", function () {
     busDetails.style.display = "none";
     seatSelectionContainer.style.display = "block";
     personalInfoContainer.style.display = "none";
+    ticketSummaryContainer.style.display = "none";
     policyReviewContainer.style.display = "none";
     generateSeatMap();
   }
 
-  // Function to show personal info and policy review
-  function showPersonalInfoAndPolicy() {
+  // Function to show personal info and ticket summary
+  function showPersonalInfo() {
     seatSelectionContainer.style.display = "none";
     personalInfoContainer.style.display = "block";
+    ticketSummaryContainer.style.display = "none";
     policyReviewContainer.style.display = "none";
+  }
+
+  // Function to show ticket summary section
+  function showTicketSummary() {
+    personalInfoContainer.style.display = "none";
+    ticketSummaryContainer.style.display = "block";
+    policyReviewContainer.style.display = "none";
+    populateTicketSummary();
   }
 
   // Function to show policy review section
   function showPolicyReview() {
-    $("#one_way_destination").prop("required", false);
-    $("#round_trip_from").prop("required", false);
-    $("#round_trip_to").prop("required", false);
     personalInfoContainer.style.display = "none";
+    ticketSummaryContainer.style.display = "none";
     policyReviewContainer.style.display = "block";
   }
 
@@ -161,6 +177,53 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
     return true;
+  }
+
+  // Function to populate ticket summary
+  function populateTicketSummary() {
+    var serviceType = document.getElementById("service_type").value;
+    var oneWayDestination = document.getElementById(
+      "one_way_destination"
+    ).value;
+    var roundTripFrom = document.getElementById("round_trip_from").value;
+    var roundTripTo = document.getElementById("round_trip_to").value;
+    var departureDate = document.getElementById("departure_date").value;
+    var departureTime = document.getElementById("departure_time").value;
+    var returnDate = document.getElementById("return_date").value;
+    var returnTime = document.getElementById("return_time").value;
+    var ticketQuantity = document.getElementById("ticket_quantity").value;
+    var selectedSeats = document.getElementById("selected_seats").value;
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+
+    var summaryHtml = `
+                    <p><strong>Service Type:</strong> ${serviceType}</p>
+                    ${
+                      serviceType === "one_way"
+                        ? `<p><strong>Destination:</strong> ${oneWayDestination}</p>`
+                        : ""
+                    }
+                    ${
+                      serviceType === "round_trip"
+                        ? `<p><strong>From:</strong> ${roundTripFrom}</p><p><strong>To:</strong> ${roundTripTo}</p>`
+                        : ""
+                    }
+                    <p><strong>Departure Date:</strong> ${departureDate}</p>
+                    <p><strong>Departure Time:</strong> ${departureTime}</p>
+                    ${
+                      serviceType === "round_trip"
+                        ? `<p><strong>Return Date:</strong> ${returnDate}</p><p><strong>Return Time:</strong> ${returnTime}</p>`
+                        : ""
+                    }
+                    <p><strong>Ticket Quantity:</strong> ${ticketQuantity}</p>
+                    <p><strong>Selected Seats:</strong> ${selectedSeats}</p>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Phone:</strong> ${phone}</p>
+                `;
+
+    document.getElementById("ticket_summary").innerHTML = summaryHtml;
   }
 
   serviceTypeSelect.dispatchEvent(new Event("change"));
