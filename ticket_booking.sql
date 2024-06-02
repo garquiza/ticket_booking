@@ -39,3 +39,17 @@ CREATE TABLE bookings (
     phone VARCHAR(20) NOT NULL,
     booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE moviebooking (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    movie VARCHAR(255) NOT NULL,
+    movie_date DATE NOT NULL,
+    movie_time TIME NOT NULL,
+    ticket_quantity INT NOT NULL,
+    seats VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL
+);
+
