@@ -6,6 +6,7 @@ $(document).ready(function () {
   var nextTicketSummaryButton = $("#next_ticket_summary");
   var personalInfoContainer = $("#personal_info_container");
   var ticketSummaryContainer = $("#ticket_summary_container");
+  var ticketQuantityInput = $("#ticket_quantity");
 
   // Show seat selection once "Select Seats" button clicked
   selectSeatsButton.on("click", function () {
@@ -150,10 +151,18 @@ $(document).ready(function () {
 
   // Confirm seat selection
   function confirmSelection() {
-    var selectedSeats = $(".seat.selected");
-    var ticketQuantity = $("#ticket_quantity").val();
-
-    return selectedSeats.length === parseInt(ticketQuantity);
+    var selectedSeats = document.querySelectorAll(".seat.selected").length;
+    var ticketQuantity = parseInt(ticketQuantityInput.val());
+    if (selectedSeats < ticketQuantity) {
+      alert("Please choose according to the ticket quantity you acquired.");
+      return false;
+    } else if (selectedSeats > ticketQuantity) {
+      alert(
+        "You have selected more seats than the ticket quantity you acquired."
+      );
+      return false;
+    }
+    return true;
   }
 
   // Capture selected seats
@@ -169,7 +178,6 @@ $(document).ready(function () {
 
   // Submit form asynchronously
   $("form").submit(function (event) {
-    // Prevent default form submission
     event.preventDefault();
 
     // Serialize form data
@@ -181,7 +189,6 @@ $(document).ready(function () {
         // Parse JSON response
         var data = JSON.parse(response);
 
-        // Display message
         if (data.status === "success") {
           alert(data.message);
         } else {
