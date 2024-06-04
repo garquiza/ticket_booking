@@ -71,14 +71,14 @@ if ($result && $result->num_rows > 0) {
                 </div>
 
                 <div id="round_trip_destination_block" style="display: none;">
-                    <label for="round_trip_from">From:</label><br>
+                    <label for="round_trip_from">From:</label>
                     <select name="round_trip_from" id="round_trip_from">
                         <option value="" selected disabled>Select departure location</option>
                         <option value="Manila">Manila</option>
                         <option value="Baguio">Baguio</option>
                         <option value="Tuguegarao">Tuguegarao</option>
                     </select><br>
-                    <label for="round_trip_to">To:</label><br>
+                    <label for="round_trip_to">To:</label>
                     <select name="round_trip_to" id="round_trip_to">
                         <option value="" selected disabled>Select arrival location</option>
                         <option value="Manila">Manila</option>
@@ -90,6 +90,9 @@ if ($result && $result->num_rows > 0) {
                 <label for="departure_date">Departure Date:</label>
                 <input type="date" name="departure_date" id="departure_date" required><br>
 
+                <label for="departure_time">Departure Time:</label>
+                <input type="time" name="departure_time" id="departure_time" required><br>
+
                 <div id="return_date_time_block" style="display: none;">
                     <label for="return_date">Return Date:</label>
                     <input type="date" name="return_date" id="return_date" required><br>
@@ -97,9 +100,6 @@ if ($result && $result->num_rows > 0) {
                     <label for="return_time">Return Time:</label><br>
                     <input type="time" name="return_time" id="return_time" required><br>
                 </div>
-
-                <label for="departure_time">Departure Time:</label>
-                <input type="time" name="departure_time" id="departure_time" required><br>
 
                 <div id="ticket_quantity_container">
                     <label for="ticket_quantity">Ticket Quantity:</label>
