@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $role = 'admin-client';
 
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // No password hashing
+    $password = $password;
 
-    $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$hashed_password', '$role')";
+    $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')";
     if ($conn->query($sql) === TRUE) {
         $message = "New user created successfully";
     } else {
@@ -28,16 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User - Developer Admin Panel</title>
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
     <div class="admin-panel">
         <h1>Add User</h1>
-        <?php if ($message): ?>
+        <?php if ($message) : ?>
             <div class="message"><?php echo $message; ?></div>
         <?php endif; ?>
         <form method="POST" action="">
@@ -49,4 +51,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="index.php" class="back-button">Back</a>
     </div>
 </body>
+
 </html>
