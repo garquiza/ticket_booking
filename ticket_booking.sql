@@ -52,3 +52,10 @@ CREATE TABLE moviebooking (
     phone VARCHAR(20) NOT NULL
 );
 
+CREATE TABLE manage_movie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    movie_name VARCHAR(255) NOT NULL,
+    movie_time TIME NOT NULL
+);
+
+

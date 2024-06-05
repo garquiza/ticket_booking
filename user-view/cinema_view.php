@@ -57,16 +57,24 @@ if ($result && $result->num_rows > 0) {
                 <label for="select_movie">Movie</label>
                 <select name="select_movie" id="select_movie" required>
                     <option value="" selected disabled>Select Movie</option>
-                    <option value="Movie1">Movie 1</option>
-                    <option value="Movie2">Movie 2</option>
-                    <option value="Movie3">Movie 3</option>
-                </select><br>
+                    <?php
+                    $sql_movies = "SELECT DISTINCT movie_name FROM manage_movie";
+                    $result_movies = $conn->query($sql_movies);
+                    if ($result_movies->num_rows > 0) {
+                        while ($row_movie = $result_movies->fetch_assoc()) {
+                            echo '<option value="' . $row_movie['movie_name'] . '">' . $row_movie['movie_name'] . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
 
                 <label for="movie_date">Movie Date:</label>
                 <input type="date" name="movie_date" id="movie_date" required><br>
 
                 <label for="movie_time">Movie Time:</label>
-                <input type="time" name="movie_time" id="movie_time" required><br>
+                <select name="movie_time" id="movie_time" required>
+                    <option value="" selected disabled>Select Time</option>
+                </select><br>
 
                 <div id="ticket_quantity_container">
                     <label for="ticket_quantity">Ticket Quantity:</label>

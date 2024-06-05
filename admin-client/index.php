@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <?php
     session_start();
     if ($_SESSION['role'] != 'admin-client') {
@@ -58,6 +57,7 @@
                 <a href="db.php?feature=cinema" class="btn">Database</a>
             </div>
             <div class="button-container">
+                <a href="manage_movie.php" class="btn">Manage Movie Times</a>
                 <a href="?logout=true" class="btn logout-btn">Logout</a>
             </div>
         </div>
@@ -68,7 +68,6 @@
     header("Location: /ticket_booking/admin-developer/index.php");
     exit();
     ?>
-
 </body>
 
 </html>

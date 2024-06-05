@@ -8,6 +8,27 @@ $(document).ready(function () {
   var ticketSummaryContainer = $("#ticket_summary_container");
   var ticketQuantityInput = $("#ticket_quantity");
 
+  $("#select_movie").change(function () {
+    var selectedMovie = $(this).val();
+    if (selectedMovie) {
+      $.ajax({
+        url: "get_movie_times.php",
+        type: "GET",
+        data: { movie_name: selectedMovie },
+        success: function (response) {
+          $("#movie_time").html(response);
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+        },
+      });
+    } else {
+      $("#movie_time").html(
+        '<option value="" selected disabled>Select Time</option>'
+      );
+    }
+  });
+
   // Show seat selection once "Select Seats" button clicked
   selectSeatsButton.on("click", function () {
     if (validateForm()) {
