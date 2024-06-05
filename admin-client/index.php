@@ -38,6 +38,7 @@
             <h1>Client Admin Panel (Bus)</h1>
             <div class="button-container">
                 <a href="settings.php" class="btn">Bus Settings</a>
+                <a href="manage_bus.php" class="btn">Manage</a>
                 <a href="db.php?feature=bus" class="btn">Database</a>
             </div>
             <div class="button-container">

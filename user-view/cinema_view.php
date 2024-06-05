@@ -1,15 +1,12 @@
 <?php
 include '../includes/db.php';
 
-// Check if connection is successful
 if ($conn === false) {
     die("Error: Could not connect. " . mysqli_connect_error());
 }
 
-// Declare settings variable
 $settings = array();
 
-// Check if settings are available
 $sql = "SELECT * FROM settings WHERE id=1";
 $result = $conn->query($sql);
 if ($result && $result->num_rows > 0) {

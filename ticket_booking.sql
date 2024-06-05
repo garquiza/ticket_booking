@@ -59,3 +59,10 @@ CREATE TABLE manage_movie (
 );
 
 
+CREATE TABLE manage_bus (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    location_name VARCHAR(100) NOT NULL,
+    location_type ENUM('round_trip', 'one_way') NOT NULL,
+    bus_number VARCHAR(255) NOT NULL,
+    bus_driver VARCHAR(255) NOT NULL;
+);

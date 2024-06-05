@@ -1,15 +1,12 @@
 <?php
 include '../includes/db.php';
 
-// Check if connection is successful
 if ($conn === false) {
     die("Error: Could not connect. " . mysqli_connect_error());
 }
 
-// Declare settings variable
 $settings = array();
 
-// Check if settings are available
 $sql = "SELECT * FROM settings WHERE id=1";
 $result = $conn->query($sql);
 if ($result && $result->num_rows > 0) {
@@ -64,26 +61,31 @@ if ($result && $result->num_rows > 0) {
                     <label for="one_way_destination">Destination:</label><br>
                     <select name="one_way_destination" id="one_way_destination">
                         <option value="" selected disabled>Select destination</option>
-                        <option value="Manila">Manila</option>
-                        <option value="Baguio">Baguio</option>
-                        <option value="Tuguegarao">Tuguegarao</option>
+                        <?php
+                        $sql_one_way = "SELECT DISTINCT location_name FROM manage_bus WHERE location_type='one_way'";
+                        $result_one_way = $conn->query($sql_one_way);
+                        if ($result_one_way->num_rows > 0) {
+                            while ($row_one_way = $result_one_way->fetch_assoc()) {
+                                echo "<option value='" . $row_one_way['location_name'] . "'>" . $row_one_way['location_name'] . "</option>";
+                            }
+                        }
+                        ?>
                     </select><br>
                 </div>
 
                 <div id="round_trip_destination_block" style="display: none;">
-                    <label for="round_trip_from">From:</label>
-                    <select name="round_trip_from" id="round_trip_from">
-                        <option value="" selected disabled>Select departure location</option>
-                        <option value="Manila">Manila</option>
-                        <option value="Baguio">Baguio</option>
-                        <option value="Tuguegarao">Tuguegarao</option>
-                    </select><br>
-                    <label for="round_trip_to">To:</label>
-                    <select name="round_trip_to" id="round_trip_to">
-                        <option value="" selected disabled>Select arrival location</option>
-                        <option value="Manila">Manila</option>
-                        <option value="Baguio">Baguio</option>
-                        <option value="Tuguegarao">Tuguegarao</option>
+                    <label for="round_trip_destination">Destination:</label>
+                    <select name="round_trip_destination" id="round_trip_destination">
+                        <option value="" selected disabled>Select Destination</option>
+                        <?php
+                        $sql_round_trip = "SELECT DISTINCT location_name FROM manage_bus WHERE location_type='round_trip'";
+                        $result_round_trip = $conn->query($sql_round_trip);
+                        if ($result_round_trip->num_rows > 0) {
+                            while ($row_round_trip = $result_round_trip->fetch_assoc()) {
+                                echo "<option value='" . $row_round_trip['location_name'] . "'>" . $row_round_trip['location_name'] . "</option>";
+                            }
+                        }
+                        ?>
                     </select><br>
                 </div>
 
