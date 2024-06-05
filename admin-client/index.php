@@ -39,7 +39,7 @@
             <h1>Client Admin Panel (Bus)</h1>
             <div class="button-container">
                 <a href="settings.php" class="btn">Bus Settings</a>
-                <a href="db.php" class="btn">Database</a>
+                <a href="db.php?feature=bus" class="btn">Database</a>
             </div>
             <div class="button-container">
                 <a href="?logout=true" class="btn logout-btn">Logout</a>
@@ -55,7 +55,7 @@
             <h1>Client Admin Panel (Cinema)</h1>
             <div class="button-container">
                 <a href="settings.php" class="btn">Cinema Settings</a>
-                <a href="db.php" class="btn">Database</a>
+                <a href="db.php?feature=cinema" class="btn">Database</a>
             </div>
             <div class="button-container">
                 <a href="?logout=true" class="btn logout-btn">Logout</a>

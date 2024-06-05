@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($serviceType === 'one_way') {
         $destination = $_POST['one_way_destination'] ?? '';
     } elseif ($serviceType === 'round_trip') {
-        $destination = ($_POST['round_trip_from'] ?? '') . ' to ' . ($_POST['round_trip_to'] ?? '');
+        $destination = ($_POST['round_trip_from'] ?? '') . ' - ' . ($_POST['round_trip_to'] ?? '');
     }
     $departureDate = $_POST['departure_date'] ?? '';
     $returnDate = $_POST['return_date'] ?? '';
