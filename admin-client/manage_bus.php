@@ -110,4 +110,26 @@
             }
         });
     });
+
+    $('#location_form').submit(function(event) {
+        var locationType = $('#location_type').val();
+        var isValid = true;
+        var errorMessage = '';
+
+        if (!locationType) {
+            isValid = false;
+            errorMessage = 'Please select a location type.';
+        } else if (locationType === 'one_way' && !$('#location_name').val()) {
+            isValid = false;
+            errorMessage = 'Please enter a location name for one-way.';
+        } else if (locationType === 'round_trip' && (!$('#from_location').val() || !$('#to_location').val())) {
+            isValid = false;
+            errorMessage = 'Please enter both "From" and "To" locations for round-trip.';
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+            event.preventDefault();
+        }
+    });
 </script>
