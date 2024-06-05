@@ -6,7 +6,6 @@ if ($_SESSION['role'] != 'admin-developer') {
 }
 include '../includes/db.php';
 
-// Logout functionality
 if (isset($_GET['logout'])) {
     session_destroy();
     header("Location: /ticket_booking/login.php");
@@ -16,12 +15,14 @@ if (isset($_GET['logout'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Admin Panel</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Developer Admin</title>
+    <link rel="stylesheet" href="style_admindev.css">
 </head>
+
 <body>
     <div class="admin-panel">
         <h1>Developer Admin Panel</h1>
@@ -32,4 +33,5 @@ if (isset($_GET['logout'])) {
         </ul>
     </div>
 </body>
+
 </html>

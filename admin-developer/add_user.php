@@ -6,15 +6,13 @@ if ($_SESSION['role'] != 'admin-developer') {
 }
 include '../includes/db.php';
 
-$message = ''; // Initialize the message variable
+$message = '';
 
-// Add user functionality
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $role = 'admin-client';
 
-    // No password hashing
     $password = $password;
 
     $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')";
@@ -32,22 +30,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User - Developer Admin Panel</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Add User</title>
+    <link rel="stylesheet" href="style_admindev.css">
 </head>
 
 <body>
     <div class="admin-panel">
         <h1>Add User</h1>
+
         <?php if ($message) : ?>
             <div class="message"><?php echo $message; ?></div>
         <?php endif; ?>
+
         <form method="POST" action="">
-            Username: <input type="text" name="username" required><br>
-            Password: <input type="password" name="password" required><br>
+            <label for="site_name">Username:</label>
+            <input type="text" name="username" required><br>
+
+            <label for="site_name">Password:</label>
+            <input type="password" name="password" required><br>
+
             <input type="submit" value="Add User">
         </form>
-        <!-- Back button -->
+
         <a href="index.php" class="back-button">Back</a>
     </div>
 </body>

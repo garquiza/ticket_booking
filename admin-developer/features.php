@@ -6,6 +6,8 @@ if ($_SESSION['role'] != 'admin-developer') {
 }
 include '../includes/db.php';
 
+$message = '';
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $bus_feature = isset($_POST['bus_feature']) ? 1 : 0;
@@ -20,14 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Update settings in the database
     $sql = "UPDATE settings SET bus_feature='$bus_feature', cinema_feature='$cinema_feature' WHERE id=1";
-    $conn->query($sql);
-
-    // Redirect back to prevent form resubmission
-    header("Location: features.php");
-    exit();
+    if ($conn->query($sql)) {
+        $message = "Saved Successful";
+    } else {
+        $message = "Error: " . $conn->error;
+    }
 }
 
-// Retrieve current feature settings from the database
 $sql = "SELECT * FROM settings WHERE id=1";
 $result = $conn->query($sql);
 $settings = $result->fetch_assoc();
@@ -35,15 +36,20 @@ $settings = $result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Admin - Toggle Features</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Toggle Features</title>
+    <link rel="stylesheet" href="style_admindev.css">
 </head>
+
 <body>
     <div class="admin-panel">
-        <h1>Developer Admin Panel - Toggle Features</h1>
+        <h1>Toggle Ticket Booking</h1>
+        <?php if (!empty($message)) : ?>
+            <p class="message"><?php echo $message; ?></p>
+        <?php endif; ?>
         <form method="POST" action="">
             <label>
                 <input type="checkbox" name="bus_feature" id="bus_feature" <?php if ($settings['bus_feature']) echo 'checked'; ?>> Bus Ticket Booking
@@ -74,9 +80,9 @@ $settings = $result->fetch_assoc();
             busFeature.addEventListener('change', toggleFeatures);
             cinemaFeature.addEventListener('change', toggleFeatures);
 
-            // Initialize the toggle state on page load
             toggleFeatures();
         });
     </script>
 </body>
+
 </html>

@@ -17,7 +17,7 @@
     $site_name = '';
     $h1_text = '';
     $p_text = '';
-    $message = ''; // Initialize message variable
+    $message = '';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $site_name = $_POST['site_name'];
@@ -26,9 +26,9 @@
 
         $sql = "UPDATE settings SET site_name='$site_name', h1_text='$h1_text', p_text='$p_text' WHERE id=1";
         if ($conn->query($sql)) {
-            $message = "Settings saved!"; // Update message if query is successful
+            $message = "Settings saved!";
         } else {
-            $message = "Error: " . $conn->error; // Display error message if query fails
+            $message = "Error: " . $conn->error;
         }
     }
 
@@ -42,10 +42,10 @@
     <div class="container">
         <div class="containermess">
             <?php if (!empty($message)) : ?>
-                <p class="message"><?php echo $message; ?></p> <!-- Add message class here -->
+                <p class="message"><?php echo $message; ?></p>
             <?php endif; ?>
-            <!-- Rest of your HTML content -->
         </div>
+        <h1>Feature Settings</h1>
         <form method="POST" action="">
             <label for="site_name">Site Name:</label>
             <input type="text" id="site_name" name="site_name" value="<?php echo isset($settings['site_name']) ? $settings['site_name'] : ''; ?>"><br>
@@ -55,13 +55,14 @@
 
             <label for="p_text">P Text:</label>
             <input type="text" id="p_text" name="p_text" value="<?php echo isset($settings['p_text']) ? $settings['p_text'] : ''; ?>"><br>
+
             <div class="save">
                 <input type="submit" value="Save">
             </div>
         </form>
 
-        <div class="back">
-            <a href="index.php">Back</a>
+        <div class="button-container">
+            <a href="index.php" class="btn">Back to Admin Panel</a>
         </div>
     </div>
 </body>

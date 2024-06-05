@@ -11,8 +11,6 @@ body {
     background-color: #f4f4f4;
 }
 
-/* style_adminclient.css */
-
 .container {
     max-width: 800px;
     margin: 100px auto;
@@ -24,7 +22,7 @@ body {
 
 .save {
     margin-top: 20px;
-    /* Add space between form and "Save" button */
+    text-align: center;
 }
 
 .containermess {
@@ -32,12 +30,9 @@ body {
     padding-left: 330px;
 }
 
-/* Styles for the "Settings saved!" message */
 .container p {
     font-size: 18px;
-    /* Adjust font size */
     color: #0056b3;
-    /* Change text color to green */
     background-color: #0056b3;
     border: 2px solid #0056b3;
     border-radius: 5px;
@@ -92,7 +87,6 @@ input[type="submit"] {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-
 }
 
 input[type="submit"] {
@@ -109,7 +103,6 @@ input[type="submit"]:hover {
 input[name="p_text"] {
     font-size: 12px;
     width: 93%;
-    height: 100px;
     background: var(--light);
     padding: 1rem;
     border-radius: 0.5rem;
@@ -127,7 +120,7 @@ li {
     margin-bottom: 10px;
 }
 
-.logout-btn {
+/* .logout-btn {
     background-color: #dc3545;
     color: #fff;
     padding: 10px 20px;
@@ -138,7 +131,7 @@ li {
 
 .logout-btn:hover {
     background-color: #c82333;
-}
+} */
 
 .button-container {
     display: flex;
@@ -170,6 +163,7 @@ li {
     border: 2px solid #0056b3;
     color: #0056b3;
     margin-bottom: 20px;
+
 }
 
 .logout-btn:hover {
@@ -181,6 +175,38 @@ li {
     text-align: center;
 }
 
-.save {
+.db_container {
+    max-width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
 }

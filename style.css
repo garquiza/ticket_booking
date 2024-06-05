@@ -1,22 +1,29 @@
-/* Existing styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
 form {
-    background: #fff;
+    max-width: 400px;
+    margin: 100px auto;
+    background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+}
+
+h2 {
     text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
 }
 
 input[type="text"],
@@ -24,162 +31,46 @@ input[type="password"],
 select {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     box-sizing: border-box;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="#333" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
     cursor: pointer;
-    border-radius: 4px;
-}
-
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-h2 {
-    margin-bottom: 20px;
-}
-
-/* New styles for admin-developer pages */
-.admin-panel {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
-    margin: 0 auto;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
-}
-
-a {
-    color: #4CAF50;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.back-button {
-    display: inline-block;
-    margin-top: 20px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-.back-button:hover {
-    background-color: #45a049;
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-/* Centering container */
-body .admin-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-form label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* Styles for the success message */
-.message {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
     width: 100%;
-    box-sizing: border-box;
-}
-
-
-/* Styles for the Bus Ticket Booking form */
-.booking-form {
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.booking-form form {
-    width: 80%;
-    max-width: 400px;
-    /* Adjust the width as needed */
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.booking-form h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.booking-form label {
-    display: inline-block;
-    width: 30%;
-    text-align: center;
-    margin-right: 10px;
-    margin-bottom: 1px;
-}
-
-.booking-form select,
-.booking-form input[type="text"],
-.booking-form input[type="number"],
-.booking-form input[type="submit"] {
-    width: calc(70% - 12px);
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 16px;
-}
-
-.booking-form input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
     border: none;
-    cursor: pointer;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
-.booking-form input[type="submit"]:hover {
-    background-color: #45a049;
+input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
-.booking-form #one_way_destination_block,
-.booking-form #round_trip_destination_block {
-    display: none;
+.invalid {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.invalid-message {
+    text-align: center;
+    color: #ff4d4d;
+    font-size: 16px;
+    margin-top: 10px;
 }

@@ -53,11 +53,11 @@
         <div class="container_cinema">
             <h1>Client Admin Panel (Cinema)</h1>
             <div class="button-container">
-                <a href="settings.php" class="btn">Cinema Settings</a>
                 <a href="db.php?feature=cinema" class="btn">Database</a>
+                <a href="manage_movie.php" class="btn">Manage</a>
+                <a href="settings.php" class="btn">Settings</a>
             </div>
             <div class="button-container">
-                <a href="manage_movie.php" class="btn">Manage Movie Times</a>
                 <a href="?logout=true" class="btn logout-btn">Logout</a>
             </div>
         </div>

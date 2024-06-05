@@ -28,7 +28,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Client - Booking Database</title>
-    <link rel="stylesheet" type="text/css" href="style_db.css">
+    <link rel="stylesheet" type="text/css" href="style_adminclient.css">
 </head>
 
 <body>
@@ -36,7 +36,7 @@ $result = $conn->query($sql);
         <h1><?php echo ucfirst($feature); ?> Booking Database</h1>
         <table>
             <tr>
-                <th>Name</th>
+                <th>Customer Name</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <?php if ($feature == 'bus') : ?>
@@ -52,7 +52,7 @@ $result = $conn->query($sql);
                 <?php else : ?>
                     <th>Movie</th>
                     <th>Ticket Quantity</th>
-                    <th>Seats</th>
+                    <th>Selected Seats</th>
                     <th>Show Time</th>
                     <th>Date</th>
                 <?php endif; ?>
