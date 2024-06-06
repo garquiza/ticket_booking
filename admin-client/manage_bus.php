@@ -31,12 +31,12 @@
         } else if ($location_type == 'round_trip') {
             $from_location = $_POST['from_location'];
             $to_location = $_POST['to_location'];
-            $location_name = $from_location . ' to ' . $to_location;
+            $location_name = $from_location . ' - ' . $to_location;
         }
 
         $sql = "INSERT INTO manage_bus (location_name, location_type, bus_driver, bus_number) VALUES ('$location_name', '$location_type', '$bus_driver', '$bus_number')";
         if ($conn->query($sql)) {
-            $message = "Bus added successfully!";
+            $message = "Added successfully!";
         } else {
             $message = "Error: " . $conn->error;
         }
@@ -51,9 +51,10 @@
         <?php if (!empty($message)) : ?>
             <p class="message" style="text-align: center;"><?php echo $message; ?></p>
         <?php endif; ?>
-        <form method="POST" action="">
+        <form method="POST" action="location_form">
             <label for="location_type">Location Type: </label>
             <select name="location_type" id="location_type" required>
+                <option value="" selected disabled>Select Location Type</option>
                 <option value="round_trip">Round-Trip</option>
                 <option value="one_way">One-Way</option>
             </select><br><br>

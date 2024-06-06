@@ -21,11 +21,10 @@ if ($result && $result->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus Ticket Booking</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="style_userview.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="../user-view/bus-script.js"></script>
 </head>
 
 <body style="background-image: url('../assets/BUSbg.jpg');">
@@ -57,8 +56,8 @@ if ($result && $result->num_rows > 0) {
                     <option value="one_way">One-Way</option>
                 </select><br>
 
-                <div id="one_way_destination_block">
-                    <label for="one_way_destination">Destination:</label><br>
+                <div id="one_way_destination_block" style="display: none;">
+                    <label for="one_way_destination">Destination:</label>
                     <select name="one_way_destination" id="one_way_destination">
                         <option value="" selected disabled>Select destination</option>
                         <?php
@@ -88,6 +87,7 @@ if ($result && $result->num_rows > 0) {
                         ?>
                     </select><br>
                 </div>
+
 
                 <label for="departure_date">Departure Date:</label>
                 <input type="date" name="departure_date" id="departure_date" required><br>
@@ -169,6 +169,7 @@ if ($result && $result->num_rows > 0) {
             </div>
         </div>
     </form>
+    <script src="../user-view/bus-script.js"></script>
 </body>
 
 </html>
