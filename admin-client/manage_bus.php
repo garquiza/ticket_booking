@@ -51,7 +51,7 @@
         <?php if (!empty($message)) : ?>
             <p class="message" style="text-align: center;"><?php echo $message; ?></p>
         <?php endif; ?>
-        <form method="POST" action="location_form">
+        <form method="POST" action="">
             <label for="location_type">Location Type: </label>
             <select name="location_type" id="location_type" required>
                 <option value="" selected disabled>Select Location Type</option>
