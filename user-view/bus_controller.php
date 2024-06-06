@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
 include '../includes/db.php';
 
+$response = [];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $serviceType = $_POST['service_type'];
     $destination = '';
@@ -40,9 +42,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $response = array("status" => "error", "message" => "All fields are required.");
     }
+} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $location_name = $_GET['location_name'];
+
+    // Prepare the SQL statement to prevent SQL injection
+    $stmt = $conn->prepare("SELECT bus_driver, bus_number FROM manage_bus WHERE location_name = ?");
+    $stmt->bind_param("s", $location_name);
+    $stmt->execute();
+    $stmt->bind_result($busDriver, $busNumber);
+    $stmt->fetch();
+
+    if ($busDriver && $busNumber) {
+        $response = [
+            'status' => 'success',
+            'bus_driver' => $busDriver,
+            'bus_number' => $busNumber
+        ];
+    } else {
+        $response = [
+            'status' => 'error',
+            'message' => 'Bus not found'
+        ];
+    }
+
+    $stmt->close();
+    $conn->close();
 } else {
     $response = array("status" => "error", "message" => "Invalid request.");
 }
+
+
 
 header('Content-Type: application/json');
 echo json_encode($response);

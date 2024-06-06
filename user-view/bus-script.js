@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const oneWayDestination = document.getElementById(
         "one_way_destination"
       ).value;
+
       if (oneWayDestination === "") {
         alert("Please select a destination for one-way trip.");
         return false;
@@ -166,11 +167,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to show ticket summary section
-  function showTicketSummary() {
+  async function showTicketSummary() {
     document.getElementById("personal_info_container").style.display = "none";
     document.getElementById("ticket_summary_container").style.display = "block";
     document.getElementById("policy_review_container").style.display = "none";
-    populateTicketSummary();
+
+    try {
+      let busInfo = await getBusInfo();
+      populateTicketSummary(busInfo);
+    } catch (error) {
+      console.error(error); // Log any errors
+    }
   }
 
   // Function to show policy review section
@@ -249,14 +256,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to populate ticket summary
-  function populateTicketSummary() {
+  function populateTicketSummary(busInfo) {
     const serviceType = document.getElementById("service_type").value;
-    const oneWayDestination = document.getElementById(
-      "one_way_destination"
-    ).value;
+    const oneWayDestination = document.getElementById("one_way_destination");
     const roundTripDestination = document.getElementById(
       "round_trip_destination"
-    ).value;
+    );
     const departureDate = document.getElementById("departure_date").value;
     const departureTime = document.getElementById("departure_time").value;
     const returnDate = document.getElementById("return_date").value;
@@ -268,15 +273,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const phone = document.getElementById("phone").value;
 
     const summaryHtml = `
+      <p><strong>Bus Number:</strong> ${busInfo.busNumber}</p>
+      <p><strong>Bus Driver:</strong> ${busInfo.busDriver}</p>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
       <p><strong>Service Type:</strong> ${serviceType}</p>
       ${
         serviceType === "one_way"
-          ? `<p><strong>Destination:</strong> ${oneWayDestination}</p>`
+          ? `<p><strong>Destination:</strong> ${
+              oneWayDestination.options[oneWayDestination.selectedIndex].text
+            }</p>`
           : ""
       }
       ${
         serviceType === "round_trip"
-          ? `<p><strong>From:</strong> ${roundTripDestination}</p>`
+          ? `<p><strong>Destination:</strong> ${
+              roundTripDestination.options[roundTripDestination.selectedIndex]
+                .text
+            }</p>`
           : ""
       }
       <p><strong>Departure Date:</strong> ${departureDate}</p>
@@ -288,12 +303,34 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       <p><strong>Ticket Quantity:</strong> ${ticketQuantity}</p>
       <p><strong>Selected Seats:</strong> ${selectedSeats}</p>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
     `;
 
     // Append summaryHtml to the dedicated div
     document.getElementById("ticket_summary").innerHTML = summaryHtml;
+  }
+
+  async function getBusInfo() {
+    try {
+      let response = await $.ajax({
+        url: "bus_controller.php",
+        type: "GET",
+        data: {
+          location_name:
+            document.getElementById("one_way_destination").value ||
+            document.getElementById("round_trip_destination").value,
+        },
+      });
+
+      if (response.status === "success") {
+        return {
+          busDriver: response.bus_driver,
+          busNumber: response.bus_number,
+        };
+      } else {
+        throw new Error("Error: " + response.message);
+      }
+    } catch (error) {
+      throw new Error("AJAX error: " + error);
+    }
   }
 });
